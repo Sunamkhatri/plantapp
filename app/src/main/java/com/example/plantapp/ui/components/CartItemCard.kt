@@ -17,7 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.plantapp.ui.viewmodel.CartItemWithPlant
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,10 +28,14 @@ fun CartItemCard(
     onQuantityChange: (Int) -> Unit,
     onRemove: () -> Unit
 ) {
+    val context = LocalContext.current
+
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp)
     ) {
         Row(
             modifier = Modifier
@@ -37,29 +43,24 @@ fun CartItemCard(
                 .padding(12.dp)
         ) {
             AsyncImage(
-                model = cartItemWithPlant.plant.imageUrl,
+                model = ImageRequest.Builder(context)
+                    .data(cartItemWithPlant.plant.imageUrl)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = cartItemWithPlant.plant.name,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(80.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop,
-                error = {
-                    Box(
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(MaterialTheme.colorScheme.surfaceVariant),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("🌱", fontSize = 24.sp)
-                    }
-                }
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .align(Alignment.CenterVertically)
             ) {
                 Text(
                     text = cartItemWithPlant.plant.name,
@@ -67,50 +68,64 @@ fun CartItemCard(
                     fontWeight = FontWeight.Bold,
                     maxLines = 2
                 )
-                
+
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Text(
                     text = "रु ${cartItemWithPlant.plant.price.toInt()}",
                     fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.primary
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(
-                        onClick = { onQuantityChange(cartItemWithPlant.cartItem.quantity - 1) },
+                        onClick = {
+                            if (cartItemWithPlant.cartItem.quantity > 1) {
+                                onQuantityChange(cartItemWithPlant.cartItem.quantity - 1)
+                            }
+                        },
                         modifier = Modifier.size(32.dp)
                     ) {
-                        Icon(Icons.Default.Remove, contentDescription = "Decrease", modifier = Modifier.size(16.dp))
+                        Icon(
+                            imageVector = Icons.Default.Remove,
+                            contentDescription = "Decrease",
+                            modifier = Modifier.size(18.dp)
+                        )
                     }
-                    
+
                     Text(
                         text = cartItemWithPlant.cartItem.quantity.toString(),
-                        modifier = Modifier.padding(horizontal = 12.dp),
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(horizontal = 8.dp)
                     )
-                    
+
                     IconButton(
                         onClick = { onQuantityChange(cartItemWithPlant.cartItem.quantity + 1) },
                         modifier = Modifier.size(32.dp)
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = "Increase", modifier = Modifier.size(16.dp))
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Increase",
+                            modifier = Modifier.size(18.dp)
+                        )
                     }
                 }
             }
-            
+
             IconButton(
                 onClick = onRemove,
                 modifier = Modifier.align(Alignment.Top)
             ) {
-                Icon(Icons.Default.Delete, contentDescription = "Remove", tint = MaterialTheme.colorScheme.error)
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Remove",
+                    tint = MaterialTheme.colorScheme.error
+                )
             }
         }
     }
-} 
+}

@@ -15,6 +15,8 @@ import com.example.plantapp.data.model.Order
 import com.example.plantapp.data.model.OrderStatus
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.compose.material.icons.filled.Note
+import androidx.compose.material.icons.filled.Schedule
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

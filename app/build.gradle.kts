@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     kotlin("kapt")
     alias(libs.plugins.hilt)
     alias(libs.plugins.google.services)
@@ -41,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "2.0.21"
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
 }
 
@@ -78,6 +77,9 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
+    
+    // Material Icons Extended for Compose
+    implementation("androidx.compose.material:material-icons-extended:1.6.0")
     
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.plantapp.ui.screens.*
 import com.example.plantapp.ui.viewmodel.AuthViewModel
+import com.example.plantapp.ui.viewmodel.AuthState
 
 @Composable
 fun PlantAppNavGraph(

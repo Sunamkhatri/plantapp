@@ -20,6 +20,8 @@ import androidx.navigation.NavController
 import com.example.plantapp.ui.navigation.Screen
 import com.example.plantapp.ui.viewmodel.AuthState
 import com.example.plantapp.ui.viewmodel.AuthViewModel
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
