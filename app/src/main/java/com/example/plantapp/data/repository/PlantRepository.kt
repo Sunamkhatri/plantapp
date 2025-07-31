@@ -5,9 +5,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class PlantRepository {
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+class PlantRepository @Inject constructor(
+    private val firestore: FirebaseFirestore
+) {
     private val plantsCollection = firestore.collection("plants")
     
     fun getAllPlants(): Flow<List<Plant>> = flow {

@@ -6,9 +6,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class OrderRepository {
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+class OrderRepository @Inject constructor(
+    private val firestore: FirebaseFirestore
+) {
     private val ordersCollection = firestore.collection("orders")
     private val orderItemsCollection = firestore.collection("orderItems")
     
