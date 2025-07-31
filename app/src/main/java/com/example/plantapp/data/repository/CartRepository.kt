@@ -5,9 +5,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class CartRepository {
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+class CartRepository @Inject constructor(
+    private val firestore: FirebaseFirestore
+) {
     private val cartCollection = firestore.collection("cart")
     
     fun getCartItemsByUserId(userId: String): Flow<List<CartItem>> = flow {
