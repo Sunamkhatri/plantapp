@@ -3,6 +3,7 @@ package com.example.plantapp.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +16,7 @@ import com.example.plantapp.ui.viewmodel.AuthState
 fun PlantAppNavGraph(
     navController: NavHostController
 ) {
-    val authViewModel = AuthViewModel()
+    val authViewModel: AuthViewModel = hiltViewModel()
     val currentUser by authViewModel.currentUser.collectAsState()
     val authState by authViewModel.authState.collectAsState()
     

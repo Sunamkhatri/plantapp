@@ -4,14 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.plantapp.data.model.Plant
 import com.example.plantapp.data.repository.PlantRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PlantListViewModel : ViewModel() {
-    
-    private val plantRepository = PlantRepository()
+@HiltViewModel
+class PlantListViewModel @Inject constructor(
+    private val plantRepository: PlantRepository
+) : ViewModel() {
     
     private val _plants = MutableStateFlow<List<Plant>>(emptyList())
     val plants: StateFlow<List<Plant>> = _plants.asStateFlow()

@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.plantapp.ui.navigation.Screen
 import com.example.plantapp.ui.viewmodel.AuthState
@@ -24,7 +25,7 @@ import com.example.plantapp.ui.viewmodel.AuthViewModel
 @Composable
 fun LoginScreen(
     navController: NavController,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }

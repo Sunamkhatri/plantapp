@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.plantapp.ui.components.PlantCard
 import com.example.plantapp.ui.navigation.Screen
@@ -24,9 +25,9 @@ import com.example.plantapp.ui.viewmodel.PlantListViewModel
 @Composable
 fun HomeScreen(
     navController: NavController,
-    plantListViewModel: PlantListViewModel = PlantListViewModel(),
-    cartViewModel: CartViewModel = CartViewModel(),
-    authViewModel: AuthViewModel
+    plantListViewModel: PlantListViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
     val plants by plantListViewModel.plants.collectAsState()
     val selectedCategory by plantListViewModel.selectedCategory.collectAsState()
