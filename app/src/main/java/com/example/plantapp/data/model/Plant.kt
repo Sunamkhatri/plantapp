@@ -9,4 +9,7 @@ data class Plant(
     val category: String = "",
     val stockQuantity: Int = 0,
     val isAvailable: Boolean = true
-) 
+) {
+    // Required empty constructor for Firebase
+    constructor() : this("", "", "", 0.0, "", "", 0, true)
+} 

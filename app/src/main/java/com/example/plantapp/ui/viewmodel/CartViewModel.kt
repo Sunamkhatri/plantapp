@@ -3,19 +3,17 @@ package com.example.plantapp.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.plantapp.data.model.CartItem
+import com.example.plantapp.data.model.CartItemWithPlant
 import com.example.plantapp.data.model.Plant
 import com.example.plantapp.data.repository.CartRepository
 import com.example.plantapp.data.repository.PlantRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class CartViewModel @Inject constructor(
-    private val cartRepository: CartRepository,
-    private val plantRepository: PlantRepository
-) : ViewModel() {
+class CartViewModel : ViewModel() {
+    
+    private val cartRepository = CartRepository()
+    private val plantRepository = PlantRepository()
     
     private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     val cartItems: StateFlow<List<CartItem>> = _cartItems.asStateFlow()
@@ -89,9 +87,4 @@ class CartViewModel @Inject constructor(
             cartRepository.clearCart(userId)
         }
     }
-}
-
-data class CartItemWithPlant(
-    val cartItem: CartItem,
-    val plant: Plant
-) 
+} 

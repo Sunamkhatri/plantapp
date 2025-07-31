@@ -6,4 +6,7 @@ data class OrderItem(
     val plantId: String = "",
     val quantity: Int = 0,
     val price: Double = 0.0
-) 
+) {
+    // Required empty constructor for Firebase
+    constructor() : this("", "", "", 0, 0.0)
+} 

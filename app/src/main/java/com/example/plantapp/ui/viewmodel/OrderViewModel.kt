@@ -6,19 +6,16 @@ import com.example.plantapp.data.model.*
 import com.example.plantapp.data.repository.CartRepository
 import com.example.plantapp.data.repository.OrderRepository
 import com.example.plantapp.data.repository.PlantRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class OrderViewModel @Inject constructor(
-    private val orderRepository: OrderRepository,
-    private val cartRepository: CartRepository,
-    private val plantRepository: PlantRepository
-) : ViewModel() {
+class OrderViewModel : ViewModel() {
+    
+    private val orderRepository = OrderRepository()
+    private val cartRepository = CartRepository()
+    private val plantRepository = PlantRepository()
     
     private val _orderState = MutableStateFlow<OrderState>(OrderState.Initial)
     val orderState: StateFlow<OrderState> = _orderState.asStateFlow()

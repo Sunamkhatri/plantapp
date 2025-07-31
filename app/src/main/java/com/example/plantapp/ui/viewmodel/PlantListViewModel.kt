@@ -4,17 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.plantapp.data.model.Plant
 import com.example.plantapp.data.repository.PlantRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class PlantListViewModel @Inject constructor(
-    private val plantRepository: PlantRepository
-) : ViewModel() {
+class PlantListViewModel : ViewModel() {
+    
+    private val plantRepository = PlantRepository()
     
     private val _plants = MutableStateFlow<List<Plant>>(emptyList())
     val plants: StateFlow<List<Plant>> = _plants.asStateFlow()
@@ -36,11 +33,11 @@ class PlantListViewModel @Inject constructor(
             try {
                 plantRepository.getAllPlants().collect { plantsList ->
                     _plants.value = plantsList
+                    _isLoading.value = false
                 }
             } catch (e: Exception) {
-                // Handle error
-            } finally {
                 _isLoading.value = false
+                // Handle error
             }
         }
     }
@@ -53,16 +50,17 @@ class PlantListViewModel @Inject constructor(
                 if (category != null) {
                     plantRepository.getPlantsByCategory(category).collect { plantsList ->
                         _plants.value = plantsList
+                        _isLoading.value = false
                     }
                 } else {
                     plantRepository.getAllPlants().collect { plantsList ->
                         _plants.value = plantsList
+                        _isLoading.value = false
                     }
                 }
             } catch (e: Exception) {
-                // Handle error
-            } finally {
                 _isLoading.value = false
+                // Handle error
             }
         }
     }

@@ -12,7 +12,10 @@ data class Order(
     val totalAmount: Double = 0.0,
     val orderDate: Date = Date(),
     val status: OrderStatus = OrderStatus.PENDING
-)
+) {
+    // Required empty constructor for Firebase
+    constructor() : this("", "", "", "", "", "", 0.0, Date(), OrderStatus.PENDING)
+}
 
 enum class OrderStatus {
     PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED

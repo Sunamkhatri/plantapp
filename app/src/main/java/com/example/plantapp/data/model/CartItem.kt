@@ -5,4 +5,7 @@ data class CartItem(
     val plantId: String = "",
     val quantity: Int = 0,
     val userId: String = ""
-) 
+) {
+    // Required empty constructor for Firebase
+    constructor() : this("", "", 0, "")
+} 

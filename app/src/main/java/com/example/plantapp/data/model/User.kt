@@ -6,4 +6,7 @@ data class User(
     val name: String = "",
     val phone: String = "",
     val address: String = ""
-) 
+) {
+    // Required empty constructor for Firebase
+    constructor() : this("", "", "", "", "")
+} 

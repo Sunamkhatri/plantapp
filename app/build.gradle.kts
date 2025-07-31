@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("kapt")
-    alias(libs.plugins.hilt)
     alias(libs.plugins.google.services)
 }
 
@@ -19,7 +17,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -63,11 +61,6 @@ dependencies {
     
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
-    
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    implementation(libs.hilt.navigation.compose)
     
     // Coil for image loading
     implementation(libs.coil.compose)
