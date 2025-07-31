@@ -23,6 +23,8 @@ import com.example.plantapp.ui.viewmodel.AuthState
 import com.example.plantapp.ui.viewmodel.AuthViewModel
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Error
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,10 +42,18 @@ fun RegisterScreen(
     
     val authState by authViewModel.authState.collectAsState()
     
+    var showError by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf("") }
+    var showPasswordMismatch by remember { mutableStateOf(false) }
+    
     LaunchedEffect(authState) {
-        when (authState) {
+        when (val state = authState) {
             is AuthState.Error -> {
-                // Show error message
+                errorMessage = state.message
+                showError = true
+            }
+            is AuthState.Success -> {
+                // Navigation will be handled by NavGraph
             }
             else -> {}
         }
@@ -172,7 +182,10 @@ fun RegisterScreen(
             Button(
                 onClick = { 
                     if (password == confirmPassword) {
+                        showPasswordMismatch = false
                         authViewModel.register(name, email, password, phone)
+                    } else {
+                        showPasswordMismatch = true
                     }
                 },
                 modifier = Modifier
@@ -202,6 +215,81 @@ fun RegisterScreen(
                     onClick = { navController.navigate(Screen.Login.route) }
                 ) {
                     Text("Sign In")
+                }
+            }
+            
+            if (showPasswordMismatch) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.Error,
+                            contentDescription = "Error",
+                            tint = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Passwords do not match",
+                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            modifier = Modifier.weight(1f)
+                        )
+                        IconButton(
+                            onClick = { showPasswordMismatch = false }
+                        ) {
+                            Icon(
+                                Icons.Default.Close,
+                                contentDescription = "Close",
+                                tint = MaterialTheme.colorScheme.onErrorContainer
+                            )
+                        }
+                    }
+                }
+            }
+            
+            if (showError) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.Error,
+                            contentDescription = "Error",
+                            tint = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = errorMessage,
+                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            modifier = Modifier.weight(1f)
+                        )
+                        IconButton(
+                            onClick = { 
+                                showError = false
+                                authViewModel.clearError()
+                            }
+                        ) {
+                            Icon(
+                                Icons.Default.Close,
+                                contentDescription = "Close",
+                                tint = MaterialTheme.colorScheme.onErrorContainer
+                            )
+                        }
+                    }
                 }
             }
         }
