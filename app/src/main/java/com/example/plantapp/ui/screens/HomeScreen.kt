@@ -6,6 +6,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -56,10 +58,10 @@ fun HomeScreen(
                         Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
                     }
                     IconButton(onClick = { navController.navigate(Screen.Orders.route) }) {
-                        Icon(Icons.Default.List, contentDescription = "Orders")
+                        Icon(Icons.AutoMirrored.Filled.List, contentDescription = "Orders")
                     }
                     IconButton(onClick = { authViewModel.logout() }) {
-                        Icon(Icons.Default.ExitToApp, contentDescription = "Logout")
+                        Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "Logout")
                     }
                 }
             )
