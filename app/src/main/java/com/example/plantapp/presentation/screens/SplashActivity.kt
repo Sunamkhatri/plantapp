@@ -1,5 +1,6 @@
 package com.example.plantapp.presentation.screens
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,8 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.example.plantapp.presentation.navigation.Screen
+import com.example.plantapp.MainActivity
 import com.example.plantapp.presentation.viewmodels.SplashViewModel
 import com.example.plantapp.presentation.viewmodels.SplashState
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,20 +25,39 @@ class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SplashScreen()
+            SplashScreen(
+                onNavigateToMain = {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            )
         }
     }
 }
 
 @Composable
 fun SplashScreen(
-    splashViewModel: SplashViewModel = hiltViewModel()
+    splashViewModel: SplashViewModel = hiltViewModel(),
+    onNavigateToMain: () -> Unit
 ) {
     val splashState by splashViewModel.splashState.collectAsState()
+    val currentUser by splashViewModel.currentUser.collectAsState()
     
     LaunchedEffect(Unit) {
         delay(2000) // Show splash for 2 seconds
         splashViewModel.checkFirebaseConnection()
+    }
+    
+    // Handle navigation after splash
+    LaunchedEffect(splashState) {
+        when (splashState) {
+            is SplashState.Success, is SplashState.Error -> {
+                delay(1000) // Show result for 1 second
+                onNavigateToMain()
+            }
+            else -> {}
+        }
     }
     
     Box(
