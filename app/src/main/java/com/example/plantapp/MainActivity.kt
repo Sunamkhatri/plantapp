@@ -8,8 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.plantapp.ui.navigation.PlantAppNavGraph
-import com.example.plantapp.ui.theme.PlantAppTheme
+import com.example.plantapp.presentation.navigation.PlantAppNavGraph
+import com.example.plantapp.presentation.theme.PlantAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -70,7 +70,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun testFirebaseConnection(): Boolean {
         return try {
             // Test Firestore connection by trying to read a document
-            val testDoc = firestore.collection("test").document("connection").get().await()
+            firestore.collection("test").document("connection").get().await()
             true
         } catch (e: Exception) {
             // If the test document doesn't exist, that's fine - we just want to test the connection
