@@ -9,7 +9,7 @@ sealed class NetworkState<out T> {
     fun isSuccess(): Boolean = this is Success
     fun isError(): Boolean = this is Error
     
-    fun getData(): T? = when (this) {
+    fun getDataOrNull(): T? = when (this) {
         is Success -> data
         else -> null
     }
