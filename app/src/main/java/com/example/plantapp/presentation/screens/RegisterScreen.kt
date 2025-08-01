@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.plantapp.presentation.navigation.Screen
 import com.example.plantapp.presentation.viewmodels.AuthViewModel
 import com.example.plantapp.presentation.viewmodels.AuthState
 
@@ -43,8 +44,9 @@ fun RegisterScreen(
     LaunchedEffect(authState) {
         when (authState) {
             is AuthState.Success -> {
-                navController.navigate("home") {
-                    popUpTo("register") { inclusive = true }
+                // Navigate to login screen after successful registration
+                navController.navigate(Screen.Login.route) {
+                    popUpTo(Screen.Register.route) { inclusive = true }
                 }
             }
             is AuthState.Error -> {
@@ -70,10 +72,17 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(24.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Add top padding for better spacing
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // Content with proper padding
+            Column(
+                modifier = Modifier.padding(horizontal = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
             // Header
             Text(
                 text = "Join Plant Store",
@@ -205,7 +214,7 @@ fun RegisterScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 } else {
-                    Text("Create Account", fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                    Text("Submit & Create Account", fontSize = 16.sp, fontWeight = FontWeight.Medium)
                 }
             }
             
@@ -220,6 +229,10 @@ fun RegisterScreen(
                 TextButton(onClick = { navController.navigateUp() }) {
                     Text("Sign In", color = MaterialTheme.colorScheme.primary)
                 }
+            }
+            
+            // Add bottom spacing for better scrolling
+            Spacer(modifier = Modifier.height(32.dp))
             }
         }
     }

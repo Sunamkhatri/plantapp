@@ -45,7 +45,10 @@ fun LoginScreen(
                 showError = true
             }
             is AuthState.Success -> {
-                // Navigation will be handled by NavGraph
+                // Navigate to dashboard after successful login
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(Screen.Login.route) { inclusive = true }
+                }
             }
             else -> {}
         }
